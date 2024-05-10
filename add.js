@@ -5,10 +5,17 @@ let table = document.querySelector('#table .tbody');
 searchSelection.addEventListener('change',(e)=>{
     console.log( e.target.value);
 })
+const renderFooter =(value) =>{
+    return footer.innerHTML= `
+    <>${value.length}</>
+    
+    `
+}
 const renderUser = (value) =>{
     table.innerHTML='';
-    value.map((item) =>{
-       return  table.innerHTML += `
+    value.map((item,idex) =>{
+        if(idex < value.length/2){
+            return  table.innerHTML += `
         <tr>
             <td>${item.username}</td>
             <td>${item.name}</td>
@@ -18,6 +25,8 @@ const renderUser = (value) =>{
             <td><button class="custom-button red-button" onclick="change(this)">Inactive</button></td>
         </tr>
         `
+        }
+
     })
 
 }
@@ -51,6 +60,7 @@ const app = async () => {
             return item.name.toLowerCase().includes(searchStr) || item.username.toLowerCase().includes(searchStr);
         });
         renderUser(dataList)
+       renderFooter(dataList)
     });
     searchSelection.addEventListener('change',(e)=>{
         if(e.target.value === "name"){
